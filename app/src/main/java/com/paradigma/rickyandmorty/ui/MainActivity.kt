@@ -33,6 +33,11 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener{ navController: NavController, navDestination: NavDestination, bundle: Bundle? ->
 
+            when (navDestination.id) {
+                R.id.splashFragment -> {
+                    showToolbar(show = false)
+                }
+            }
         }
     }
 
