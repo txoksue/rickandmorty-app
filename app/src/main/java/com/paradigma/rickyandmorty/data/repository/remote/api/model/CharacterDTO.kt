@@ -17,7 +17,7 @@ data class CharacterDTO @Inject constructor (
     @SerializedName("image")
     val image: String?,
     @SerializedName("location")
-    val location: LocationDTO?,
+    val characterLocation: CharacterLocationDTO?,
     @SerializedName("name")
     val name: String?,
     @SerializedName("origin")
