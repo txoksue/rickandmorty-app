@@ -2,7 +2,6 @@ package com.paradigma.rickyandmorty.data.mapper
 
 import com.paradigma.rickyandmorty.data.repository.remote.api.model.CharacterDTO
 import com.paradigma.rickyandmorty.domain.Character
-import com.paradigma.rickyandmorty.domain.Location
 import javax.inject.Inject
 
 
@@ -14,8 +13,8 @@ class CharacterDataMapper @Inject constructor() : Mapper<CharacterDTO, Character
             input.name?: "",
             input.image?: "",
             input.gender?: "",
-            Location("", ""),
-            input.url?: ""
+            input.status?: "",
+            input.characterLocation?.url?.split("/")?.last()?: ""
         )
     }
 

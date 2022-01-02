@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.paradigma.rickyandmorty.R
 import dagger.hilt.android.AndroidEntryPoint
+import com.paradigma.rickyandmorty.domain.Character
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -45,6 +46,10 @@ class MainActivity : AppCompatActivity() {
                     }
                     showToolbar(show = true)
                     setToolbarTitle(getString(R.string.app_name))
+                }
+                R.id.characterDetailFragment -> {
+                    val character = bundle?.getParcelable<Character>("character") as Character
+                    setToolbarTitle("${character.name}'s location")
                 }
             }
         }

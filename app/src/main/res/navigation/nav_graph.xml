@@ -18,5 +18,18 @@
         android:id="@+id/charactersFragment"
         android:name="com.paradigma.rickyandmorty.ui.characters.CharactersFragment"
         android:label="fragment_characters"
-        tools:layout="@layout/fragment_characters" />
+        tools:layout="@layout/fragment_characters" >
+        <action
+            android:id="@+id/action_charactersFragment_to_characterDetailFragment"
+            app:destination="@id/characterDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetailFragment"
+        android:name="com.paradigma.rickyandmorty.ui.character_detail.CharacterDetailFragment"
+        android:label="fragment_character_detail"
+        tools:layout="@layout/fragment_character_detail" >
+        <argument
+            android:name="character"
+            app:argType="com.paradigma.rickyandmorty.domain.Character" />
+    </fragment>
 </navigation>
