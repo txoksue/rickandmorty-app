@@ -17,8 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CharactersViewModel @Inject constructor(var characterRepository: CharacterRepository) : ViewModel() {
 
-    private val _statusScreen = MutableLiveData<ScreenState>()
-    val statusScreen: LiveData<ScreenState>
+    private val _statusScreen = MutableLiveData<ScreenState<List<Character?>>>()
+    val statusScreen: LiveData<ScreenState<List<Character?>>>
         get() = _statusScreen
 
     enum class ScrollState { FIRST_PAGE, NEXT_PAGE, LAST_PAGE }
