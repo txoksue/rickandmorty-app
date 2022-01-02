@@ -37,6 +37,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.splashFragment -> {
                     showToolbar(show = false)
                 }
+                R.id.charactersFragment -> {
+                    supportActionBar?.let { actionBar ->
+                        actionBar.setHomeButtonEnabled(false)
+                        actionBar.setDisplayHomeAsUpEnabled(false)
+                        actionBar.setDisplayShowHomeEnabled(false)
+                    }
+                    showToolbar(show = true)
+                    setToolbarTitle(getString(R.string.app_name))
+                }
             }
         }
     }
