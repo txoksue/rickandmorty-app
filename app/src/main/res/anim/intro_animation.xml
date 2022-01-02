@@ -3,7 +3,7 @@
     android:fillAfter = "true">
 
     <scale
-        android:duration = "2000"
+        android:duration = "1500"
         android:fromXScale = ".2"
         android:fromYScale = ".2"
         android:pivotX = "50%"
