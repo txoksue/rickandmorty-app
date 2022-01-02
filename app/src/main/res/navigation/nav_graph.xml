@@ -9,5 +9,14 @@
         android:id="@+id/splashFragment"
         android:name="com.paradigma.rickyandmorty.ui.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" />
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_charactersFragment"
+            app:destination="@id/charactersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/charactersFragment"
+        android:name="com.paradigma.rickyandmorty.ui.characters.CharactersFragment"
+        android:label="fragment_characters"
+        tools:layout="@layout/fragment_characters" />
 </navigation>
