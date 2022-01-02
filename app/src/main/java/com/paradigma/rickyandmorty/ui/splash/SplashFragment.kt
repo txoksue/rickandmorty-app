@@ -33,6 +33,7 @@ class SplashFragment : Fragment() {
         val animZoomIn = AnimationUtils.loadAnimation(context, R.anim.intro_animation)
         binding.imageViewLogo.startAnimation(animZoomIn)
         Handler(Looper.getMainLooper()).postDelayed({
+            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToCharactersFragment())
         }, 3000)
     }
 
