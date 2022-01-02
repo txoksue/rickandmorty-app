@@ -23,7 +23,7 @@
 
     <style name="Theme.RickyAndMortyApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="fontFamily">@font/lemonism</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <style name="Theme.RickyAndMortyApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
