@@ -1,17 +1,16 @@
 package com.paradigma.rickyandmorty.ui.characters
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.paradigma.rickyandmorty.R
 import com.paradigma.rickyandmorty.databinding.FragmentCharactersBinding
 import com.paradigma.rickyandmorty.domain.Character
 import com.paradigma.rickyandmorty.ui.ScreenState
@@ -63,6 +62,20 @@ class CharactersFragment : Fragment() {
         initObservers()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_action_go_to_favorites -> {
+                findNavController().navigate(CharactersFragmentDirections.actionCharactersFragmentToFavoritesFragment())
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setupSwipeLayoutRefresh() {
         binding.swipeRefreshLayoutCharacterList.setOnRefreshListener {
             viewModel.requestNewCharacterList()
@@ -90,7 +103,7 @@ class CharactersFragment : Fragment() {
                     with(binding) {
                         layoutLoader.visibility = VISIBLE
                         recyclerViewCharacterList.visibility = GONE
-                        //componentCharactersNoResult.visibility = GONE
+                        componentCharactersNoResult.visibility = GONE
                     }
                 }
                 is ScreenState.Results -> {
@@ -99,23 +112,23 @@ class CharactersFragment : Fragment() {
                     with(binding) {
                         layoutLoader.visibility = GONE
                         recyclerViewCharacterList.visibility = VISIBLE
-                        //componentCharactersNoResult.visibility = GONE
+                        componentCharactersNoResult.visibility = GONE
                     }
                 }
                 is ScreenState.NoData -> {
                     with(binding) {
                         layoutLoader.visibility = GONE
                         recyclerViewCharacterList.visibility = GONE
-                        //componentCharactersNoResult.visibility = VISIBLE
-                        //componentCharactersNoResult.setError(getString(R.string.characters_no_results))
+                        componentCharactersNoResult.visibility = VISIBLE
+                        componentCharactersNoResult.setError(getString(R.string.characters_no_results))
                     }
                 }
                 is ScreenState.Error -> {
                     with(binding) {
                         layoutLoader.visibility = GONE
                         recyclerViewCharacterList.visibility = GONE
-                        //componentCharactersNoResult.visibility = VISIBLE
-                        //componentCharactersNoResult.setError(getString(R.string.characters_error))
+                        componentCharactersNoResult.visibility = VISIBLE
+                        componentCharactersNoResult.setError(getString(R.string.characters_error))
                     }
                 }
             }

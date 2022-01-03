@@ -1,19 +1,23 @@
 package com.paradigma.rickyandmorty.data.mapper
 
+import android.content.Context
+import com.paradigma.rickyandmorty.R
 import com.paradigma.rickyandmorty.data.repository.remote.api.model.CharacterDTO
 import com.paradigma.rickyandmorty.domain.Character
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 
-class CharacterDataMapper @Inject constructor() : Mapper<CharacterDTO, Character> {
+class CharacterDataMapper @Inject constructor(@ApplicationContext val appContext: Context) : Mapper<CharacterDTO, Character> {
 
     override fun mapToDomain(input: CharacterDTO): Character {
         return Character(
             input.id?: -1,
-            input.name?: "",
+            input.name ?: appContext.getString(R.string.no_name),
             input.image?: "",
-            input.gender?: "",
-            input.status?: "",
+            input.gender?: appContext.getString(R.string.no_gender),
+            input.type?: appContext.getString(R.string.no_type),
+            input.status?: appContext.getString(R.string.no_status),
             input.characterLocation?.url?.split("/")?.last()?: ""
         )
     }
@@ -22,15 +26,15 @@ class CharacterDataMapper @Inject constructor() : Mapper<CharacterDTO, Character
         return CharacterDTO(
             null,
             null,
+            input.gender,
+            input.id,
+            input.image,
+            null,
+            input.name,
             null,
             null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
+            input.status,
+            input.type,
             null,
         )
     }

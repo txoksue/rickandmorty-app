@@ -1,6 +1,5 @@
 package com.paradigma.rickyandmorty.ui
 
-import com.paradigma.rickyandmorty.domain.Character
 
 sealed class ScreenState <out R>{
 

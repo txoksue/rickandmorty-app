@@ -39,6 +39,17 @@ class CharacterDetailFragment : Fragment() {
 
         viewModel.getCharacterLocation()
 
+        binding.imageViewFavorite.setOnClickListener {
+            when(viewModel.showFavorite.value){
+                true -> {
+                    viewModel.removeCharacterAsFavorite()
+                }
+                else -> {
+                    viewModel.saveCharacterAsFavorite()
+                }
+            }
+        }
+
         initObservers()
     }
 
@@ -61,7 +72,7 @@ class CharacterDetailFragment : Fragment() {
 
                         textViewName.text = statusScreen.data.name
                         textViewType.text = statusScreen.data.type
-                        textViewDinmesion.text = statusScreen.data.dimension
+                        textViewDimension.text = statusScreen.data.dimension
 
                     }
                 }
@@ -76,5 +87,21 @@ class CharacterDetailFragment : Fragment() {
                 }
             }
         })
+
+        viewModel.showFavorite.observe(viewLifecycleOwner, Observer { favorite ->
+            toggleFavoriteImage(favorite)
+        })
+    }
+
+
+    private fun toggleFavoriteImage(favorite: Boolean){
+        when (favorite){
+            true -> {
+                binding.imageViewFavorite.setImageResource(R.drawable.ic_favorite_star)
+            }
+            else -> {
+                binding.imageViewFavorite.setImageResource(R.drawable.ic_no_favorite_star)
+            }
+        }
     }
 }

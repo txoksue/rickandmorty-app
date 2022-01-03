@@ -3,9 +3,9 @@ package com.paradigma.rickyandmorty.data.repository.remote.characters
 import android.util.Log
 import com.paradigma.rickyandmorty.data.mapper.Mapper
 import com.paradigma.rickyandmorty.data.repository.ResultCharacters
-import com.paradigma.rickyandmorty.data.repository.remote.api.RickyAndMortyApi
 import com.paradigma.rickyandmorty.data.repository.remote.api.model.CharacterDTO
 import com.paradigma.rickyandmorty.domain.Character
+import com.paradigma.rickyandmorty.data.repository.remote.api.RickyAndMortyApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -13,7 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CharacterRepositoryImpl @Inject constructor(var rickyAndMortyApi: RickyAndMortyApi) : CharacterRepository {
+class CharacterRepositoryImpl @Inject constructor(var rickyAndMortyApiService: RickyAndMortyApiService) : CharacterRepository {
 
     @Inject
     lateinit var characterMapper: Mapper<CharacterDTO, Character>
@@ -27,7 +27,7 @@ class CharacterRepositoryImpl @Inject constructor(var rickyAndMortyApi: RickyAnd
 
         try {
 
-            val response = rickyAndMortyApi.charactersForPage(page)
+            val response = rickyAndMortyApiService.getCharacters(page)
 
             if (response.isSuccessful) {
 

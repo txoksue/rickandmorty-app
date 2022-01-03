@@ -10,6 +10,7 @@ data class Character @Inject constructor (
     val name: String,
     val image: String,
     val gender: String,
+    val type: String,
     val status: String,
     val locationId: String,
 ) : Parcelable
