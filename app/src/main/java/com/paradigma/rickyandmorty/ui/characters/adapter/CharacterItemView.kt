@@ -17,7 +17,7 @@ class CharacterItemView(private var binding: CharacterItemViewBinding, private v
         with(binding) {
 
             context = this.root.context
-            
+
             textViewCharacterName.text = character.name
             imageCharacter.loadImage(character.image)
 
