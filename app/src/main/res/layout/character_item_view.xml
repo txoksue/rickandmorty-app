@@ -16,6 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:padding="6dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -27,21 +28,42 @@
             android:src="@mipmap/ricky"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_view_character_name"
-            style="@style/style_text_20_black_rickyandmorty"
+            style="@style/Lemonism28Black"
             android:layout_width="0dp"
-            android:maxLines="2"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_character"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_character"
             app:layout_constraintTop_toTopOf="@+id/image_character"
             tools:text="Ricky" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/text_view_character_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_character_name"
+            android:layout_marginTop="18dp">
+
+            <com.paradigma.rickyandmorty.common.component.ComponentImageText
+                android:id="@+id/component_character_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.paradigma.rickyandmorty.common.component.ComponentImageText
+                android:id="@+id/component_character_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp" />
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

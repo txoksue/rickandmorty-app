@@ -6,28 +6,18 @@
         <item name="colorPrimaryVariant">@color/primaryLightColor</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryColor</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Customize your theme here. -->
     </style>
 
     <style name="Theme.RickyAndMortyApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="fontFamily">@font/lemonism</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="Theme.RickyAndMortyApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="fontFamily">@font/lemonism</item>
-        <item name="android:textSize">30sp</item>
-    </style>
-
-    <style name="Theme.RickyAndMortyApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <item name="fontFamily">@font/lemonism</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
     </style>
 </resources>

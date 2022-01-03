@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">Ricky &amp; Morty App</string>
+    <string name="action_settings">Favorites</string>
     <string name="no_name">No name</string>
     <string name="no_type_available">No type available</string>
     <string name="no_dimension_available">No dimension available</string>
+    <string name="favorites_title">My favorites</string>
+    <string name="characters_error">Ooops…! Something was wrong</string>
+    <string name="characters_no_results">There are no characters</string>
+    <string name="favorites_no_results">No favorites yet!</string>
+    <string name="no_gender">No gender</string>
+    <string name="no_status">No status</string>
+    <string name="no_type">No type</string>
+    <string name="alive">Alive</string>
+    <string name="dead">Dead</string>
+    <string name="unknown">unknown</string>
 </resources>
