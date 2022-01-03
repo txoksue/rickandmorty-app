@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                     showToolbar(show = false)
                 }
                 R.id.charactersFragment -> {
+                    setStatusColor(R.color.secondaryColor)
                     supportActionBar?.let { actionBar ->
                         actionBar.setHomeButtonEnabled(false)
                         actionBar.setDisplayHomeAsUpEnabled(false)
@@ -48,8 +48,13 @@ class MainActivity : AppCompatActivity() {
                     setToolbarTitle(getString(R.string.app_name))
                 }
                 R.id.characterDetailFragment -> {
+                    showToolbar(show = true)
                     val character = bundle?.getParcelable<Character>("character") as Character
                     setToolbarTitle("${character.name}'s location")
+                }
+                R.id.favoritesFragment -> {
+                    showToolbar(show = true)
+                    setToolbarTitle(getString(R.string.favorites_title))
                 }
             }
         }
@@ -67,5 +72,9 @@ class MainActivity : AppCompatActivity() {
 
     fun showToolbar(show: Boolean) {
         findViewById<Toolbar>(R.id.toolbar).visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    fun setStatusColor(color: Int){
+        window.statusBarColor = getColor(color)
     }
 }
