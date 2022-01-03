@@ -3,16 +3,17 @@ package com.paradigma.rickyandmorty.data.repository.remote.location
 import android.util.Log
 import com.paradigma.rickyandmorty.data.mapper.Mapper
 import com.paradigma.rickyandmorty.data.repository.ResultLocation
-import com.paradigma.rickyandmorty.data.repository.remote.api.RickyAndMortyApi
-import com.paradigma.rickyandmorty.data.repository.remote.api.model.CharacterLocationDTO
 import com.paradigma.rickyandmorty.data.repository.remote.api.model.LocationDTO
 import com.paradigma.rickyandmorty.domain.Location
+import com.paradigma.rickyandmorty.data.repository.remote.api.RickyAndMortyApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocationRepositoryImpl @Inject constructor(var rickyAndMortyApi: RickyAndMortyApi) : LocationRepository {
+@Singleton
+class LocationRepositoryImpl @Inject constructor(var rickyAndMortyApiService: RickyAndMortyApiService) : LocationRepository {
 
     @Inject
     lateinit var locationMapper: Mapper<LocationDTO, Location>
@@ -25,7 +26,7 @@ class LocationRepositoryImpl @Inject constructor(var rickyAndMortyApi: RickyAndM
 
         try {
 
-            val response = rickyAndMortyApi.getLocationById(id)
+            val response = rickyAndMortyApiService.getLocation(id)
 
             if (response.isSuccessful) {
 
