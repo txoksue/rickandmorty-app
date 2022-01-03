@@ -32,7 +32,7 @@ class CharactersViewModel @Inject constructor(var characterRepository: Character
         getCharacters()
     }
 
-    private fun getCharacters() {
+    fun getCharacters() {
 
         viewModelScope.launch {
 

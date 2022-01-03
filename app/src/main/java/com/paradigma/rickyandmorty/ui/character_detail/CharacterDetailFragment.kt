@@ -70,9 +70,9 @@ class CharacterDetailFragment : Fragment() {
                         )
                         binding.imageViewPhoto.startAnimation(animZoomIn)
 
-                        textViewName.text = statusScreen.data.name
-                        textViewType.text = statusScreen.data.type
-                        textViewDimension.text = statusScreen.data.dimension
+                        textViewName.text = if (statusScreen.data.name.isNotEmpty()) statusScreen.data.name else context?.getString(R.string.no_name)
+                        textViewType.text = if (statusScreen.data.type.isNotEmpty()) statusScreen.data.type else context?.getString(R.string.no_type_available)
+                        textViewDimension.text = if (statusScreen.data.dimension.isNotEmpty()) statusScreen.data.dimension else context?.getString(R.string.no_dimension_available)
 
                     }
                 }

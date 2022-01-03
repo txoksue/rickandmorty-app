@@ -10,7 +10,9 @@ import com.paradigma.rickyandmorty.domain.Character
 class CharacterItemView(private var binding: CharacterItemViewBinding, private var onClickCharacter: (Character) -> Unit) :
     RecyclerView.ViewHolder(binding.root) {
 
-    var context: Context? = null
+    lateinit var context: Context
+    lateinit var status: String
+    lateinit var gender: String
 
     fun bind(character: Character) {
 
@@ -18,11 +20,14 @@ class CharacterItemView(private var binding: CharacterItemViewBinding, private v
 
             context = this.root.context
 
-            textViewCharacterName.text = character.name
+            textViewCharacterName.text = if (character.name.isNotEmpty()) character.name else context.getString(R.string.no_name)
             imageCharacter.loadImage(character.image)
 
-            setGender(character.gender)
-            setStatus(character.status)
+            gender = if (character.gender.isNotEmpty()) character.gender else context.getString(R.string.no_gender)
+            status = if (character.status.isNotEmpty()) character.status else context.getString(R.string.no_status)
+
+            setGenderInfo(gender)
+            setStatusInfo(status)
 
             root.setOnClickListener {
                 imageCharacter.transitionName = "transitionImageView"
@@ -31,7 +36,7 @@ class CharacterItemView(private var binding: CharacterItemViewBinding, private v
         }
     }
 
-    private fun setGender(gender: String) {
+    private fun setGenderInfo(gender: String) {
         val icon = if (gender != context?.getString(R.string.unknown)) {
             R.drawable.ic_gender
         } else R.drawable.ic_unknown
@@ -43,7 +48,7 @@ class CharacterItemView(private var binding: CharacterItemViewBinding, private v
 
     }
 
-    private fun setStatus(status: String) {
+    private fun setStatusInfo(status: String) {
         val icon = when (status) {
             context?.getString(R.string.alive) -> {
                 R.drawable.ic_alive
