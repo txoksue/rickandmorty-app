@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Pandorama20Black" parent="android:TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/pandorama</item>
+    </style>
+
+    <style name="Lemonism20Black" parent="android:TextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/lemonism</item>
+    </style>
+
+    <style name="Lemonism28Black" parent="android:TextAppearance">
+        <item name="android:textSize">28sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/lemonism</item>
+    </style>
+</resources>
