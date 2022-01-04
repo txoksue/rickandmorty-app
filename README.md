@@ -21,7 +21,7 @@ La aplicación se compone de 4 pantallas:
 
 * **MVVM, Single Activity, Android Architecture Components**: Activity/Fragment -> ViewModel -> Repository.
 
-* **Patrón Repository con Clean Architecture** para acceder a la API de Marvel.
+* **Patrón Repository con Clean Architecture** para acceder a la API.
 
 ![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/repository_architecture.png)
 ![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/clean-architecture-own-layers.png)
