@@ -30,7 +30,7 @@ La aplicación se compone de 4 pantallas:
 
 * **Hilt** para la inyección de dependencias.
 
-* **Retofit + Gson** para hacer llamadas a servicios, usando **Sealed Classes** para manejar las distintas respuestas.
+* **Retofit + Gson** para hacer llamadas a servicios usando **Sealed Classes** para manejar las distintas respuestas.
     
 * **Gidle** para manejar imágenes.
 
