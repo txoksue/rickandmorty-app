@@ -13,7 +13,7 @@ La aplicación se compone de 4 pantallas:
 - Detalle de personaje
 
 ![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/splash.png)
-![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/character_list.png)
+![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/characters_list.png)
 ![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/favorites_list.png)
 ![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/character_detail.png)
 
