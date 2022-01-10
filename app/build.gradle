@@ -61,7 +61,6 @@ android {
         sourceSets {
             String sharedTestDir = 'src/sharedTest/java'
             test {
-                java.srcDirs += sharedTestDir
                 resources.srcDirs = ['src/sharedTest/resources']
             }
             androidTest {
@@ -174,5 +173,4 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottie_version"
 
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
-    testImplementation "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
 }
