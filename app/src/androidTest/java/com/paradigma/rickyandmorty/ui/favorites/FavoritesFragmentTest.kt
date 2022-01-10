@@ -1,5 +1,7 @@
 package com.paradigma.rickyandmorty.ui.favorites
 
+
+
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -10,11 +12,11 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import com.paradigma.rickyandmorty.FakeFavoritesRepository
 import com.paradigma.rickyandmorty.R
 import com.paradigma.rickyandmorty.data.repository.local.favorites.FavoritesRepository
-import com.paradigma.rickyandmorty.data.repository.remote.characters.CharacterRepository
+import com.paradigma.rickyandmorty.domain.Character
 import com.paradigma.rickyandmorty.launchFragmentInHiltContainer
-import com.paradigma.rickyandmorty.util.*
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
@@ -30,8 +32,6 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 class FavoritesFragmentTest {
 
-    @Inject
-    lateinit var characterRepository: CharacterRepository
 
     @Inject
     lateinit var favoriteRepository: FavoritesRepository
@@ -43,14 +43,42 @@ class FavoritesFragmentTest {
     @Before
     fun setUp() {
         hiltRule.inject()
+        val charactersList = listOf(
+            Character(
+                1,
+                "Rick Sanchez",
+                "Any Url",
+                "Male",
+                "",
+                "Alive",
+                "3"
+            ),
+            Character(
+                2,
+                "Morty Smith",
+                "Any Url",
+                "Male",
+                "",
+                "Alive",
+                "3",
+            ),
+            Character(
+                3,
+                "Summer Smith",
+                "Any Url",
+                "Female",
+                "",
+                "Alive",
+                "20"
+            )
+        )
+
+        (favoriteRepository as FakeFavoritesRepository).setData(charactersList)
     }
 
 
     @Test
     fun favoritesFragment_showData() {
-
-        characterRepository.loadCharactersData()
-        favoriteRepository.setFavorites(arrayListOf(characterRepository.getCharactersData()[0], characterRepository.getCharactersData()[1]))
 
         launchFragmentInHiltContainer<FavoritesFragment>()
 
@@ -72,7 +100,7 @@ class FavoritesFragmentTest {
     @Test
     fun favoritesFragment_Error() {
 
-        favoriteRepository.setFavoritesError(true)
+        (favoriteRepository as FakeFavoritesRepository).setError(true)
 
         launchFragmentInHiltContainer<FavoritesFragment>()
 
@@ -85,8 +113,7 @@ class FavoritesFragmentTest {
     @Test
     fun favoritesFragment_navigateToCharacterDetail() {
 
-        characterRepository.loadCharactersData()
-        favoriteRepository.setFavorites(arrayListOf(characterRepository.getCharactersData()[0], characterRepository.getCharactersData()[1]))
+        val favoritesList = (favoriteRepository as FakeFavoritesRepository).getData()
 
         val navController = mock(NavController::class.java)
 
@@ -97,13 +124,13 @@ class FavoritesFragmentTest {
         onView(withId(R.id.recycler_view_favorite_list))
             .perform(
                 RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-                    hasDescendant(withText(favoriteRepository.getFavoritesData()[0].name)), click()
+                    hasDescendant(withText(favoritesList[0].name)), click()
                 )
             )
 
         verify(navController).navigate(
             FavoritesFragmentDirections.actionFavoritesFragmentToCharacterDetailFragment(
-                favoriteRepository.getFavoritesData()[0]
+                favoritesList[0]
             )
         )
     }

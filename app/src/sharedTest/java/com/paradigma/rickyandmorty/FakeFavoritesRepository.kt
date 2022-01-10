@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FakeFavoritesRepository @Inject constructor() : FavoritesRepository, FakeRepository<List<Character>> {
+class FakeFavoritesRepository @Inject constructor() : FavoritesRepository {
 
     private val favoriteCharacters: MutableList<Character> = mutableListOf()
     private var shouldReturnError = false
@@ -35,23 +35,16 @@ class FakeFavoritesRepository @Inject constructor() : FavoritesRepository, FakeR
 
     }
 
-    override fun setData(data: List<Character>?): Unit =
+     fun setData(data: List<Character>?): Unit =
         runBlocking {
             data?.forEach { character ->
                 favoriteCharacters.add(character)
             }
         }
 
+    fun getData(): List<Character> = favoriteCharacters
 
-    override fun setReturnError(value: Boolean) {
-        shouldReturnError = value
+    fun setError(showError: Boolean) {
+        shouldReturnError = showError
     }
-
-
-    override fun clearData() {
-        favoriteCharacters.clear()
-    }
-
-    override fun getData() = favoriteCharacters.toList()
-
 }

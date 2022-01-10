@@ -13,10 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CharacterRepositoryImpl @Inject constructor(var rickyAndMortyApiService: RickyAndMortyApiService) : CharacterRepository {
-
-    @Inject
-    lateinit var characterMapper: Mapper<CharacterDTO, Character>
+class CharacterRepositoryImpl @Inject constructor(var rickyAndMortyApiService: RickyAndMortyApiService, var characterMapper: Mapper<CharacterDTO, Character>) : CharacterRepository {
 
     companion object {
         val TAG: String = CharacterRepositoryImpl::class.java.name

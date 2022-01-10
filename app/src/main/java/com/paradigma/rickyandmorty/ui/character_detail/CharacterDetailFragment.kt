@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
 import com.paradigma.rickyandmorty.R
 import com.paradigma.rickyandmorty.common.extensions.loadImage

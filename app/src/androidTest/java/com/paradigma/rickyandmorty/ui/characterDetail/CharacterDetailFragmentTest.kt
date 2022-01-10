@@ -7,26 +7,22 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import com.paradigma.rickyandmorty.BuildConfig
 import com.paradigma.rickyandmorty.R
-import com.paradigma.rickyandmorty.data.repository.local.favorites.FavoritesRepository
-import com.paradigma.rickyandmorty.data.repository.remote.characters.CharacterRepository
-import com.paradigma.rickyandmorty.data.repository.remote.location.LocationRepository
 import com.paradigma.rickyandmorty.domain.Location
 import com.paradigma.rickyandmorty.domain.Character
 import com.paradigma.rickyandmorty.ui.character_detail.CharacterDetailFragment
 import com.paradigma.rickyandmorty.launchFragmentInHiltContainer
-import com.paradigma.rickyandmorty.util.getCharactersData
-import com.paradigma.rickyandmorty.util.getLocationData
-import com.paradigma.rickyandmorty.util.loadCharactersData
-import com.paradigma.rickyandmorty.util.loadLocationData
+import com.paradigma.rickyandmorty.mockwebserver.SuccessDispatcher
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import okhttp3.mockwebserver.MockWebServer
 import org.hamcrest.CoreMatchers.allOf
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import javax.inject.Inject
 
 @MediumTest
 @HiltAndroidTest
@@ -34,17 +30,8 @@ import javax.inject.Inject
 class CharacterDetailFragmentTest {
 
     private lateinit var locationToShow: Location
-    private lateinit var character: Character
-    private val bundle: Bundle = Bundle()
-
-    @Inject
-    lateinit var locationRepository: LocationRepository
-
-    @Inject
-    lateinit var favoritesRepository: FavoritesRepository
-
-    @Inject
-    lateinit var characterRepository: CharacterRepository
+    private lateinit var bundle: Bundle
+    private val mockWebServer by lazy { MockWebServer() }
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -52,16 +39,23 @@ class CharacterDetailFragmentTest {
     @Before
     fun setUp() {
         hiltRule.inject()
-        characterRepository.loadCharactersData()
-        character = characterRepository.getCharactersData()[0]
-        locationRepository.loadLocationData()
-        locationRepository.getLocationData()?.let { locationToShow = it }
-        bundle.putParcelable("character", character)
+        mockWebServer.start(BuildConfig.TEST_PORT)
+        locationToShow = Location(3, "Citadel of Ricks", "Space station", "unknown")
+        bundle = Bundle().apply {
+            putParcelable("character", Character( 1,"Rick Sanchez","Any Url","Male","","Alive","3"))
+        }
+    }
+
+    @After
+    fun teardown() {
+        mockWebServer.shutdown()
     }
 
 
     @Test
     fun characterDetailFragment_showCharacterLocation(){
+
+        mockWebServer.dispatcher = SuccessDispatcher()
 
         launchFragmentInHiltContainer<CharacterDetailFragment>(bundle)
 
@@ -75,6 +69,8 @@ class CharacterDetailFragmentTest {
 
     @Test
     fun characterDetailFragment_clickFavorite(){
+
+        mockWebServer.dispatcher = SuccessDispatcher()
 
         launchFragmentInHiltContainer<CharacterDetailFragment>(bundle)
 

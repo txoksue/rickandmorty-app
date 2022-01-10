@@ -13,29 +13,28 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LocationRepositoryImpl @Inject constructor(var rickyAndMortyApiService: RickyAndMortyApiService) : LocationRepository {
-
-    @Inject
-    lateinit var locationMapper: Mapper<LocationDTO, Location>
+class LocationRepositoryImpl @Inject constructor(var rickyAndMortyApiService: RickyAndMortyApiService, var locationMapper: Mapper<LocationDTO, Location>) : LocationRepository {
 
     companion object {
         val TAG: String = LocationRepositoryImpl::class.java.name
     }
 
-    override suspend fun getLocation(id: String): ResultLocation = withContext(Dispatchers.IO) {
+    override suspend fun getLocation(id: String?): ResultLocation = withContext(Dispatchers.IO) {
 
         try {
 
-            val response = rickyAndMortyApiService.getLocation(id)
+            id?.let { val response = rickyAndMortyApiService.getLocation(id)
 
-            if (response.isSuccessful) {
+                if (response.isSuccessful) {
 
-                return@withContext response.body()?.let { locationDTO ->
-                    ResultLocation.Success(locationMapper.mapToDomain(locationDTO))
-                } ?: ResultLocation.NoData
-            }
+                    return@withContext response.body()?.let { locationDTO ->
+                        ResultLocation.Success(locationMapper.mapToDomain(locationDTO))
+                    } ?: ResultLocation.NoData
+                }
 
-            return@withContext ResultLocation.Error(IOException("Error getting location $id - ${response.code()} ${response.message()}"))
+                return@withContext ResultLocation.Error(IOException("Error getting location $id - ${response.code()} ${response.message()}"))
+
+            }?: ResultLocation.NoData
 
         } catch (e: Exception) {
             Log.e(TAG, e.printStackTrace().toString())

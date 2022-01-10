@@ -23,9 +23,8 @@
 
     <com.paradigma.rickyandmorty.common.component.ComponentNoResults
         android:id="@+id/component_favorite_no_result"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

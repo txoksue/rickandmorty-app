@@ -2,31 +2,32 @@ package com.paradigma.rickyandmorty.ui.favorites
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import androidx.test.core.app.ApplicationProvider
-import com.paradigma.rickyandmorty.FakeCharacterRepository
-import com.paradigma.rickyandmorty.FakeFavoritesRepository
-import com.paradigma.rickyandmorty.FakeRepository
 import com.paradigma.rickyandmorty.ui.ScreenState
 import com.paradigma.rickyandmorty.domain.Character
 import com.paradigma.rickyandmorty.ui.getOrAwaitValue
 import com.paradigma.rickyandmorty.MainCoroutineRule
-import com.paradigma.rickyandmorty.data.mapper.CharacterDataMapper
+import com.paradigma.rickyandmorty.data.repository.local.favorites.FavoritesRepository
+import com.paradigma.rickyandmorty.data.repository.local.favorites.ResultFavorites
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.w3c.dom.CharacterData
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.whenever
 
 
 @ExperimentalCoroutinesApi
+@RunWith(MockitoJUnitRunner::class)
 class FavoritesViewModelTest {
 
     private lateinit var favoritesViewModel: FavoritesViewModel
 
-    private lateinit var characterRepository: FakeRepository<List<Character>>
-    private lateinit var favoriteRepository: FakeRepository<List<Character>>
+    @Mock
+    private lateinit var favoriteRepository: FavoritesRepository
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -38,13 +39,7 @@ class FavoritesViewModelTest {
 
     @Before
     fun setUp() {
-        favoriteRepository = FakeFavoritesRepository()
-        characterRepository = FakeCharacterRepository(CharacterDataMapper())
-
-        characterRepository.setData(null)
-        favoriteRepository.setData(arrayListOf(characterRepository.getData()[0], characterRepository.getData()[1]))
-
-        favoritesViewModel = FavoritesViewModel(favoriteRepository as FakeFavoritesRepository)
+        favoritesViewModel = FavoritesViewModel(favoriteRepository)
     }
 
     @Test
@@ -52,7 +47,39 @@ class FavoritesViewModelTest {
 
         val observer = Observer<ScreenState<List<Character?>>> {}
 
+        val charactersList = listOf(
+            Character(
+                1,
+                "Rick Sanchez",
+                "Any Url",
+                "Male",
+                "",
+                "Alive",
+                "3"
+            ),
+            Character(
+                2,
+                "Morty Smith",
+                "Any Url",
+                "Male",
+                "",
+                "Alive",
+                "3",
+            ),
+            Character(
+                3,
+                "Summer Smith",
+                "Any Url",
+                "Female",
+                "",
+                "Alive",
+                "20"
+            )
+        )
+
         favoritesViewModel.statusScreen.observeForever(observer)
+
+        whenever(favoriteRepository.getAllFavoriteCharacters()).thenReturn(ResultFavorites.Success(charactersList))
 
         favoritesViewModel.getFavorites()
 
@@ -68,7 +95,7 @@ class FavoritesViewModelTest {
 
         favoritesViewModel.statusScreen.observeForever(observer)
 
-        favoriteRepository.clearData()
+        whenever(favoriteRepository.getAllFavoriteCharacters()).thenReturn(ResultFavorites.NoData)
 
         favoritesViewModel.getFavorites()
 
@@ -85,7 +112,7 @@ class FavoritesViewModelTest {
 
         favoritesViewModel.statusScreen.observeForever(observer)
 
-        favoriteRepository.setReturnError(true)
+        whenever(favoriteRepository.getAllFavoriteCharacters()).thenReturn(ResultFavorites.Error(Exception("Error getting favorites")))
 
         favoritesViewModel.getFavorites()
 

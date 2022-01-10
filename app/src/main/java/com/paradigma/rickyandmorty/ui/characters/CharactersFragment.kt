@@ -118,17 +118,21 @@ class CharactersFragment : Fragment() {
                 is ScreenState.NoData -> {
                     with(binding) {
                         layoutLoader.visibility = GONE
-                        recyclerViewCharacterList.visibility = GONE
-                        componentCharactersNoResult.visibility = VISIBLE
+                        componentCharactersNoResult.setImage(R.mipmap.no_results_background)
                         componentCharactersNoResult.setError(getString(R.string.characters_no_results))
+                        componentCharactersNoResult.visibility = VISIBLE
+                        recyclerViewCharacterList.visibility = GONE
+
                     }
                 }
                 is ScreenState.Error -> {
                     with(binding) {
                         layoutLoader.visibility = GONE
-                        recyclerViewCharacterList.visibility = GONE
-                        componentCharactersNoResult.visibility = VISIBLE
+                        componentCharactersNoResult.setImage(R.mipmap.no_results_background)
                         componentCharactersNoResult.setError(getString(R.string.characters_error))
+                        componentCharactersNoResult.visibility = VISIBLE
+                        recyclerViewCharacterList.visibility = GONE
+
                     }
                 }
             }
