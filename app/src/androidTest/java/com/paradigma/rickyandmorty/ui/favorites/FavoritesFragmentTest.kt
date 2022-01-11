@@ -1,22 +1,29 @@
 package com.paradigma.rickyandmorty.ui.favorites
 
+
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.paradigma.rickyandmorty.R
-import com.paradigma.rickyandmorty.data.repository.local.favorites.FavoritesRepository
-import com.paradigma.rickyandmorty.data.repository.remote.characters.CharacterRepository
+import com.paradigma.rickyandmorty.common.idling_resource.EspressoIdlingResource
+import com.paradigma.rickyandmorty.data.mapper.Mapper
+import com.paradigma.rickyandmorty.data.repository.local.database.FavoritesDataBase
+import com.paradigma.rickyandmorty.data.repository.local.database.entity.Favorite
+import com.paradigma.rickyandmorty.domain.Character
 import com.paradigma.rickyandmorty.launchFragmentInHiltContainer
-import com.paradigma.rickyandmorty.util.*
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import junit.framework.Assert.assertTrue
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -30,12 +37,13 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 class FavoritesFragmentTest {
 
-    @Inject
-    lateinit var characterRepository: CharacterRepository
+    private lateinit var charactersList: List<Character>
 
     @Inject
-    lateinit var favoriteRepository: FavoritesRepository
+    lateinit var database: FavoritesDataBase
 
+    @Inject
+    lateinit var favoriteMapper: Mapper<Favorite, Character>
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -43,16 +51,56 @@ class FavoritesFragmentTest {
     @Before
     fun setUp() {
         hiltRule.inject()
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource())
+        charactersList = listOf(
+            Character(
+                1,
+                "Rick Sanchez",
+                "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                "Male",
+                "",
+                "Alive",
+                "3"
+            ),
+            Character(
+                2,
+                "Morty Smith",
+                "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
+                "Male",
+                "",
+                "Alive",
+                "3",
+            ),
+            Character(
+                3,
+                "Summer Smith",
+                "https://rickandmortyapi.com/api/character/avatar/3.jpeg",
+                "Female",
+                "",
+                "Alive",
+                "20"
+            )
+        )
     }
+
+    @After
+    fun cleanUp() {
+        database.close()
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource())
+    }
+
 
 
     @Test
     fun favoritesFragment_showData() {
 
-        characterRepository.loadCharactersData()
-        favoriteRepository.setFavorites(arrayListOf(characterRepository.getCharactersData()[0], characterRepository.getCharactersData()[1]))
+        database.favoritesDao().insertFavorite(favoriteMapper.mapFromDomain(charactersList[0]))
+        database.favoritesDao().insertFavorite(favoriteMapper.mapFromDomain(charactersList[1]))
+        database.favoritesDao().insertFavorite(favoriteMapper.mapFromDomain(charactersList[2]))
 
         launchFragmentInHiltContainer<FavoritesFragment>()
+
+        //Thread.sleep(2000)
 
         onView(withId(R.id.recycler_view_favorite_list)).check(matches(isDisplayed()))
     }
@@ -63,30 +111,20 @@ class FavoritesFragmentTest {
 
         launchFragmentInHiltContainer<FavoritesFragment>()
 
+        //Thread.sleep(2000)
+
         onView(withId(R.id.component_favorite_no_result)).check(matches(isDisplayed()))
 
         onView(withText(R.string.favorites_no_results)).check(matches(isDisplayed()))
     }
-
-
-    @Test
-    fun favoritesFragment_Error() {
-
-        favoriteRepository.setFavoritesError(true)
-
-        launchFragmentInHiltContainer<FavoritesFragment>()
-
-        onView(withId(R.id.component_favorite_no_result)).check(matches(isDisplayed()))
-
-        onView(withText(R.string.characters_error)).check(matches(isDisplayed()))
-    }
-
+    
 
     @Test
     fun favoritesFragment_navigateToCharacterDetail() {
 
-        characterRepository.loadCharactersData()
-        favoriteRepository.setFavorites(arrayListOf(characterRepository.getCharactersData()[0], characterRepository.getCharactersData()[1]))
+        database.favoritesDao().insertFavorite(favoriteMapper.mapFromDomain(charactersList[0]))
+        database.favoritesDao().insertFavorite(favoriteMapper.mapFromDomain(charactersList[1]))
+        database.favoritesDao().insertFavorite(favoriteMapper.mapFromDomain(charactersList[2]))
 
         val navController = mock(NavController::class.java)
 
@@ -94,16 +132,18 @@ class FavoritesFragmentTest {
             Navigation.setViewNavController(requireView(), navController)
         }
 
+        //Thread.sleep(2000)
+
         onView(withId(R.id.recycler_view_favorite_list))
             .perform(
-                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
-                    hasDescendant(withText(favoriteRepository.getFavoritesData()[0].name)), click()
+                actionOnItem<RecyclerView.ViewHolder>(
+                    hasDescendant(withText(charactersList[1].name)), click()
                 )
             )
 
         verify(navController).navigate(
             FavoritesFragmentDirections.actionFavoritesFragmentToCharacterDetailFragment(
-                favoriteRepository.getFavoritesData()[0]
+                charactersList[0]
             )
         )
     }

@@ -3,14 +3,16 @@ package com.paradigma.rickyandmorty.ui.characters
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.paradigma.rickyandmorty.common.extensions.launchIdling
 import com.paradigma.rickyandmorty.data.repository.ResultCharacters
 import com.paradigma.rickyandmorty.data.repository.ResultCharacters.*
 import com.paradigma.rickyandmorty.data.repository.remote.characters.CharacterRepository
 import com.paradigma.rickyandmorty.domain.Character
 import com.paradigma.rickyandmorty.ui.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.currentCoroutineContext
 import javax.inject.Inject
 
 
@@ -34,7 +36,7 @@ class CharactersViewModel @Inject constructor(var characterRepository: Character
 
     fun getCharacters() {
 
-        viewModelScope.launch {
+        GlobalScope.launchIdling {
 
             val result: ResultCharacters = characterRepository.getCharacters(page)
 
@@ -60,13 +62,13 @@ class CharactersViewModel @Inject constructor(var characterRepository: Character
                     page++
                     requestingMoreData = false
 
-                    _statusScreen.value = ScreenState.Results(characterList)
+                    _statusScreen.postValue(ScreenState.Results(characterList))
                 }
                 is NoData -> {
-                    _statusScreen.value = ScreenState.NoData
+                    _statusScreen.postValue(ScreenState.NoData)
                 }
                 is Error -> {
-                    _statusScreen.value = ScreenState.Error
+                    _statusScreen.postValue(ScreenState.Error)
                 }
             }
         }

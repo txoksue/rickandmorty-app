@@ -1,7 +1,6 @@
 package com.paradigma.rickyandmorty.data.repository.remote.api
 
 import com.paradigma.rickyandmorty.data.repository.remote.api.model.CharacterResponse
-import com.paradigma.rickyandmorty.data.repository.remote.api.model.CharacterLocationDTO
 import com.paradigma.rickyandmorty.data.repository.remote.api.model.LocationDTO
 import retrofit2.Response
 import retrofit2.http.GET

@@ -21,7 +21,7 @@ object TestDatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext appContext: Context): FavoritesDataBase {
+    fun provideDatabase(): FavoritesDataBase {
         return Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             FavoritesDataBase::class.java

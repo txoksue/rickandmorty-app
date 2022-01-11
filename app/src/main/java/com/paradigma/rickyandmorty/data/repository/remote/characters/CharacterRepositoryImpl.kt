@@ -13,10 +13,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CharacterRepositoryImpl @Inject constructor(var rickyAndMortyApiService: RickyAndMortyApiService) : CharacterRepository {
-
-    @Inject
-    lateinit var characterMapper: Mapper<CharacterDTO, Character>
+class CharacterRepositoryImpl @Inject constructor(var rickyAndMortyApiService: RickyAndMortyApiService, var characterMapper: Mapper<CharacterDTO, Character>) : CharacterRepository {
 
     companion object {
         val TAG: String = CharacterRepositoryImpl::class.java.name
@@ -42,9 +39,11 @@ class CharacterRepositoryImpl @Inject constructor(var rickyAndMortyApiService: R
                     return@withContext ResultCharacters.Success(characterList, totalPages)
 
                 } ?: return@withContext ResultCharacters.NoData
-            }
 
-            return@withContext ResultCharacters.Error(IOException("Error getting characters - ${response.code()} ${response.message()}"))
+            } else {
+
+                return@withContext ResultCharacters.Error(IOException("Error getting characters"))
+            }
 
         } catch (e: Exception) {
             Log.e(TAG, e.printStackTrace().toString())

@@ -37,7 +37,7 @@ class CharacterItemView(private var binding: CharacterItemViewBinding, private v
     }
 
     private fun setGenderInfo(gender: String) {
-        val icon = if (gender != context?.getString(R.string.unknown)) {
+        val icon = if (gender != context.getString(R.string.unknown)) {
             R.drawable.ic_gender
         } else R.drawable.ic_unknown
 
@@ -50,10 +50,10 @@ class CharacterItemView(private var binding: CharacterItemViewBinding, private v
 
     private fun setStatusInfo(status: String) {
         val icon = when (status) {
-            context?.getString(R.string.alive) -> {
+            context.getString(R.string.alive) -> {
                 R.drawable.ic_alive
             }
-            context?.getString(R.string.dead) -> {
+            context.getString(R.string.dead) -> {
                 R.drawable.ic_dead
             }
             else -> {

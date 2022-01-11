@@ -25,10 +25,10 @@ class ComponentNoResults : ConstraintLayout {
     }
 
     fun setError(messageError: String){
-        binding.textViewNoFavorites.text = messageError
+        binding.textViewNoResults.text = messageError
     }
 
     fun setImage(imageId: Int){
-        binding.imageViewNoFavorites.setImageResource(imageId)
+        binding.imageViewNoResults.setImageResource(imageId)
     }
 }

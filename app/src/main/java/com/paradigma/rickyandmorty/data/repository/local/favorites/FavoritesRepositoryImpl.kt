@@ -11,10 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FavoritesRepositoryImpl @Inject constructor(var database: FavoritesDataBase) : FavoritesRepository {
-
-    @Inject
-    lateinit var favoriteMapper: Mapper<Favorite, Character>
+class FavoritesRepositoryImpl @Inject constructor(var database: FavoritesDataBase, var favoriteMapper: Mapper<Favorite, Character>) : FavoritesRepository {
 
     companion object {
         val TAG: String = FavoritesRepositoryImpl::class.java.name

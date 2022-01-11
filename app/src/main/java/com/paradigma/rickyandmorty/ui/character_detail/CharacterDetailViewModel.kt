@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.paradigma.rickyandmorty.common.extensions.launchIdling
 import com.paradigma.rickyandmorty.data.repository.ResultLocation.Success
 import com.paradigma.rickyandmorty.data.repository.ResultLocation.NoData
 import com.paradigma.rickyandmorty.data.repository.ResultLocation.Error
@@ -14,6 +15,7 @@ import com.paradigma.rickyandmorty.ui.ScreenState
 import com.paradigma.rickyandmorty.domain.Location
 import com.paradigma.rickyandmorty.domain.Character
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,57 +33,62 @@ class CharacterDetailViewModel @Inject constructor(private val locationRepositor
     val showFavorite: LiveData<Boolean>
         get() = _showFavorite
 
-    fun getCharacterLocation() = viewModelScope.launch {
+    fun getCharacterLocation() {
 
-        character?.let { character ->
+        GlobalScope.launchIdling {
 
-            val result = locationRepository.getLocation(character.locationId)
+            character?.let { character ->
 
-            when (result) {
-                is Success -> {
-                    characterLocation = result.data
+                val result = locationRepository.getLocation(character.locationId)
 
-                    checkIsFavorite(character.id)
+                when (result) {
+                    is Success -> {
+                        characterLocation = result.data
 
-                    _statusScreen.value = ScreenState.Results(result.data)
+                        checkIsFavorite(character.id)
+
+                        _statusScreen.postValue(ScreenState.Results(result.data))
+                    }
+                    is NoData -> {
+                        _statusScreen.postValue(ScreenState.NoData)
+                    }
+                    is Error -> {
+                        _statusScreen.postValue(ScreenState.Error)
+                    }
                 }
-                is NoData -> {
-                    _statusScreen.value = ScreenState.NoData
-                }
-                is Error -> {
-                    _statusScreen.value = ScreenState.Error
-                }
-            }
 
-        } ?: kotlin.run { _statusScreen.value = ScreenState.NoData }
+            } ?: kotlin.run { _statusScreen.postValue(ScreenState.NoData) }
+        }
     }
 
     fun checkIsFavorite(characterId: Int) {
-        viewModelScope.launch {
+        GlobalScope.launchIdling {
             val result = favoriteRepository.getAllFavoriteCharacters()
 
             if (result is ResultFavorites.Success) {
-                _showFavorite.value = result.data.any { it.id == characterId }
+                _showFavorite.postValue(result.data.any { it.id == characterId })
             }
         }
     }
 
 
     fun saveCharacterAsFavorite() {
-        viewModelScope.launch {
+        GlobalScope.launchIdling {
             character?.let {
                 favoriteRepository.saveCharacter(it)
-                _showFavorite.value = true
+                _showFavorite.postValue(true)
             }
         }
     }
 
     fun removeCharacterAsFavorite() {
-        viewModelScope.launch{
+        GlobalScope.launchIdling {
             character?.let {
                 favoriteRepository.deleteCharacter(it)
-                _showFavorite.value = false
+                _showFavorite.postValue(false)
             }
         }
     }
 }
+
+

@@ -1,15 +1,12 @@
-package com.paradigma.rickyandmorty.repository.local.database
+package com.paradigma.rickyandmorty.data.respository.local.database
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.paradigma.rickyandmorty.MainCoroutineRule
 import com.paradigma.rickyandmorty.data.mapper.Mapper
 import com.paradigma.rickyandmorty.data.repository.local.database.FavoritesDataBase
 import com.paradigma.rickyandmorty.data.repository.local.database.entity.Favorite
-import com.paradigma.rickyandmorty.data.repository.remote.api.model.CharacterDTO
 import com.paradigma.rickyandmorty.domain.Character
-import com.paradigma.rickyandmorty.util.LoaderCharactersData
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,7 +28,6 @@ import javax.inject.Inject
 @SmallTest
 class FavoritesDataBaseTest {
 
-    private var charactersList: List<Character>? = null
     private var character: Character? = null
 
     @Inject
@@ -40,12 +36,6 @@ class FavoritesDataBaseTest {
     @Inject
     lateinit var favoriteMapper: Mapper<Favorite, Character>
 
-    @Inject
-    lateinit var characterMapper: Mapper<CharacterDTO, Character>
-
-    @ExperimentalCoroutinesApi
-    @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -57,9 +47,7 @@ class FavoritesDataBaseTest {
     @Before
     fun setUp() {
         hiltRule.inject()
-        charactersList = LoaderCharactersData.load().results?.map { characterDto -> characterMapper.mapToDomain(characterDto) }
-        //TODO - Revisar que hace esto
-        character = (LoaderCharactersData.load().results?.get(0)?.let { characterDto -> characterMapper.mapToDomain(characterDto) })
+        character = Character(1, "Rick Sanchez", "https://rickandmortyapi.com/api/character/avatar/1.jpeg", "Male","","Alive","3")
     }
 
     @After
