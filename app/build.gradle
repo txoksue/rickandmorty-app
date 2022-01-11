@@ -124,6 +124,7 @@ dependencies {
     testImplementation 'androidx.test:runner:1.4.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation "org.mockito:mockito-inline:$mockito_version"
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$dex_maker_version"
     androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
     androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$espresso_version"
