@@ -2,6 +2,7 @@ package com.paradigma.rickyandmorty.ui.characterDetail
 
 import android.os.Bundle
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -9,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.paradigma.rickyandmorty.BuildConfig
 import com.paradigma.rickyandmorty.R
+import com.paradigma.rickyandmorty.common.idling_resource.EspressoIdlingResource
 import com.paradigma.rickyandmorty.domain.Location
 import com.paradigma.rickyandmorty.domain.Character
 import com.paradigma.rickyandmorty.ui.character_detail.CharacterDetailFragment
@@ -39,16 +41,21 @@ class CharacterDetailFragmentTest {
     @Before
     fun setUp() {
         hiltRule.inject()
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource())
+
         mockWebServer.start(BuildConfig.TEST_PORT)
+
         locationToShow = Location(3, "Citadel of Ricks", "Space station", "unknown")
+
         bundle = Bundle().apply {
-            putParcelable("character", Character( 1,"Rick Sanchez","Any Url","Male","","Alive","3"))
+            putParcelable("character", Character( 1,"Rick Sanchez","https://rickandmortyapi.com/api/character/avatar/1.jpeg","Male","","Alive","3"))
         }
     }
 
     @After
     fun teardown() {
         mockWebServer.shutdown()
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource())
     }
 
 

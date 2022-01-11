@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.GeneralLocation
 import androidx.test.espresso.action.GeneralSwipeAction
@@ -11,26 +12,28 @@ import androidx.test.espresso.action.Press
 import androidx.test.espresso.action.Swipe
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.paradigma.rickyandmorty.BuildConfig
 import com.paradigma.rickyandmorty.R
-import com.paradigma.rickyandmorty.launchFragmentInHiltContainer
-import com.paradigma.rickyandmorty.mockwebserver.SuccessDispatcher
+import com.paradigma.rickyandmorty.common.idling_resource.EspressoIdlingResource
 import com.paradigma.rickyandmorty.domain.Character
+import com.paradigma.rickyandmorty.launchFragmentInHiltContainer
+import com.paradigma.rickyandmorty.mockwebserver.ErrorDispatcher
+import com.paradigma.rickyandmorty.mockwebserver.NoDataDispatcher
+import com.paradigma.rickyandmorty.mockwebserver.SuccessDispatcher
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.mockwebserver.MockWebServer
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import com.paradigma.rickyandmorty.mockwebserver.ErrorDispatcher
-import com.paradigma.rickyandmorty.mockwebserver.NoDataDispatcher
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
@@ -42,7 +45,7 @@ class CharactersFragmentTest {
 
     private val mockWebServer by lazy { MockWebServer() }
 
-    companion object{
+    companion object {
         private fun swipeFromTopToBottom(): ViewAction? {
             return GeneralSwipeAction(
                 Swipe.FAST, GeneralLocation.BOTTOM_CENTER,
@@ -58,15 +61,17 @@ class CharactersFragmentTest {
     fun setUp() {
         hiltRule.inject()
         mockWebServer.start(BuildConfig.TEST_PORT)
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.getIdlingResource())
     }
 
     @After
     fun teardown() {
         mockWebServer.shutdown()
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.getIdlingResource())
     }
 
     @Test
-    fun charactersFragment_showData() {
+    fun charactersFragment_ShowData() {
 
         mockWebServer.dispatcher = SuccessDispatcher()
 
@@ -77,34 +82,7 @@ class CharactersFragmentTest {
 
 
     @Test
-    fun charactersFragment_noData() {
-
-        mockWebServer.dispatcher = NoDataDispatcher()
-
-        launchFragmentInHiltContainer<CharactersFragment>()
-
-        onView(withId(R.id.component_characters_no_result)).check(matches(isDisplayed()))
-
-        onView(withText(R.string.characters_no_results)).check(matches(isDisplayed()))
-    }
-
-
-    @Test
-    fun charactersFragment_Error() {
-
-        mockWebServer.dispatcher = ErrorDispatcher()
-
-        launchFragmentInHiltContainer<CharactersFragment>()
-
-        onView(withId(R.id.component_characters_no_result)).check(matches(isDisplayed()))
-
-        onView(withText(R.string.characters_error)).check(matches(isDisplayed()))
-    }
-
-
-
-    @Test
-    fun characterFragment_swipeUp(){
+    fun characterFragment_SwipeUp() {
 
         mockWebServer.dispatcher = SuccessDispatcher()
 
@@ -117,11 +95,43 @@ class CharactersFragmentTest {
 
 
     @Test
+    fun charactersFragment_NoData() {
+
+        mockWebServer.dispatcher = NoDataDispatcher()
+
+        launchFragmentInHiltContainer<CharactersFragment>()
+
+        //Thread.sleep(2000)
+
+        onView(withId(R.id.component_characters_no_result)).check(matches((isDisplayed())))
+
+        onView(withText(R.string.characters_no_results)).check(matches((isDisplayed())))
+    }
+
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun charactersFragment_Error() {
+
+        mockWebServer.dispatcher = ErrorDispatcher()
+
+        launchFragmentInHiltContainer<CharactersFragment>()
+
+        //Thread.sleep(2000)
+
+        onView(withId(R.id.component_characters_no_result)).check(matches(isDisplayed()))
+
+        onView(withText(R.string.characters_error)).check(matches(isDisplayed()))
+
+    }
+
+
+    @Test
     fun charactersFragment_navigateToCharacterDetail() {
 
-        val character = Character(1, "Rick Sanchez", "https://rickandmortyapi.com/api/character/avatar/1.jpeg", "Male","","Alive","3")
-
         mockWebServer.dispatcher = SuccessDispatcher()
+
+        val character = Character(1, "Rick Sanchez", "https://rickandmortyapi.com/api/character/avatar/1.jpeg", "Male", "", "Alive", "3")
 
         val navController = mock(NavController::class.java)
 
@@ -129,12 +139,15 @@ class CharactersFragmentTest {
             Navigation.setViewNavController(requireView(), navController)
         }
 
-        onView(withId(R.id.recycler_view_character_list))
+        //Thread.sleep(2000)
+
+        onView(allOf(withId(R.id.recycler_view_character_list), isDisplayed()))
             .perform(
-                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                actionOnItem<RecyclerView.ViewHolder>(
                     hasDescendant(withText(character.name)), click()
                 )
             )
+
 
         verify(navController).navigate(
             CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailFragment(character)

@@ -102,37 +102,34 @@ class CharactersFragment : Fragment() {
                 is ScreenState.Loading -> {
                     with(binding) {
                         layoutLoader.visibility = VISIBLE
-                        recyclerViewCharacterList.visibility = GONE
-                        componentCharactersNoResult.visibility = GONE
                     }
                 }
                 is ScreenState.Results -> {
                     characterList = ArrayList(statusScreen.data)
                     charactersAdapter.setItems(characterList)
                     with(binding) {
-                        layoutLoader.visibility = GONE
                         recyclerViewCharacterList.visibility = VISIBLE
                         componentCharactersNoResult.visibility = GONE
+                        layoutLoader.visibility = GONE
                     }
                 }
                 is ScreenState.NoData -> {
                     with(binding) {
-                        layoutLoader.visibility = GONE
+                        recyclerViewCharacterList.visibility = GONE
+                        componentCharactersNoResult.visibility = VISIBLE
                         componentCharactersNoResult.setImage(R.mipmap.no_results_background)
                         componentCharactersNoResult.setError(getString(R.string.characters_no_results))
-                        componentCharactersNoResult.visibility = VISIBLE
-                        recyclerViewCharacterList.visibility = GONE
-
+                        layoutLoader.visibility = GONE
                     }
                 }
                 is ScreenState.Error -> {
                     with(binding) {
-                        layoutLoader.visibility = GONE
+                        recyclerViewCharacterList.visibility = GONE
+                        componentCharactersNoResult.visibility = VISIBLE
                         componentCharactersNoResult.setImage(R.mipmap.no_results_background)
                         componentCharactersNoResult.setError(getString(R.string.characters_error))
-                        componentCharactersNoResult.visibility = VISIBLE
-                        recyclerViewCharacterList.visibility = GONE
 
+                        layoutLoader.visibility = GONE
                     }
                 }
             }

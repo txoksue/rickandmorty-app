@@ -68,10 +68,10 @@ class CharacterRepositoryImplTest {
     fun locationRepositoryImpl_getCharacters_Success() = runBlocking {
 
         val characterResponse = CharacterResponse(
-            InfoDTO(1, "", 2, ""),
-            listOf(CharacterDTO("", listOf(), "", 1, "", CharacterLocationDTO("", ""), "", OriginDTO("", ""), "", "", "", ""))
+            InfoDTO(826, "any url", 42, null),
+            listOf(CharacterDTO("any date", listOf(), "Male", 1, "https://rickandmortyapi.com/api/character/avatar/3.jpeg", CharacterLocationDTO("Citadel of Ricks", "any url"), "Rick Sanchez", OriginDTO("Earth (C-137)", "any url"), "Human", "Alive", "", "https://rickandmortyapi.com/api/character/avatar/1.jpeg"))
         )
-        val character = Character(1, "", "", "", "", "", "")
+        val character = Character(1, "Rick Sanchez","https://rickandmortyapi.com/api/character/avatar/1.jpeg","Male","","Alive","3")
 
         whenever(rickyAndMortyApiService.getCharacters(1)).thenReturn(Response.success(characterResponse))
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.test.platform.app.InstrumentationRegistry
 import com.paradigma.rickyandmorty.mockwebserver.LoaderData.load
+import com.paradigma.rickyandmorty.mockwebserver.ResponseConfig.config
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
@@ -30,7 +31,7 @@ class SuccessDispatcher(
         val responseFile = responseFilesByPath[pathWithoutParams]
 
         return if (responseFile != null) {
-            val responseBody = load(context, responseFile)
+            val responseBody = load(responseFile)
             MockResponse().setResponseCode(200).setBody(responseBody)
         } else {
             throw Throwable("Uri.parse(request.path).path null")

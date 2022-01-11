@@ -41,7 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_character"
             app:layout_constraintTop_toTopOf="@+id/image_character"
-            tools:text="Ricky" />
+            tools:text="Rick" />
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 @InstallIn(SingletonComponent::class)
@@ -30,6 +31,10 @@ open class RetrofitModule {
 
         val httpClient = OkHttpClient.Builder()
         httpClient.addInterceptor(logging)
+            //.retryOnConnectionFailure(true)
+            .readTimeout(3, TimeUnit.MINUTES)
+            .connectTimeout(3, TimeUnit.MINUTES)
+            .writeTimeout(3, TimeUnit.MINUTES)
 
         return Retrofit.Builder()
             .baseUrl(baseUrl)

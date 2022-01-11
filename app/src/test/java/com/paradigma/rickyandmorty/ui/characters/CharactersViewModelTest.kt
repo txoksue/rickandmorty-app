@@ -50,7 +50,7 @@ class CharactersViewModelTest {
             Character(
                 1,
                 "Rick Sanchez",
-                "Any Url",
+                "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
                 "Male",
                 "",
                 "Alive",
@@ -59,7 +59,7 @@ class CharactersViewModelTest {
             Character(
                 2,
                 "Morty Smith",
-                "Any Url",
+                "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
                 "Male",
                 "",
                 "Alive",
@@ -68,7 +68,7 @@ class CharactersViewModelTest {
             Character(
                 3,
                 "Summer Smith",
-                "Any Url",
+                "https://rickandmortyapi.com/api/character/avatar/3.jpeg",
                 "Female",
                 "",
                 "Alive",
@@ -94,7 +94,7 @@ class CharactersViewModelTest {
         assertTrue(value is ScreenState.Results)
         assertThat(value, not(nullValue()))
         assertThat((value as ScreenState.Results).data, not(emptyList()))
-        assertEquals((value as ScreenState.Results).data, charactersList)
+        assertEquals((value).data, charactersList)
     }
 
     @Test

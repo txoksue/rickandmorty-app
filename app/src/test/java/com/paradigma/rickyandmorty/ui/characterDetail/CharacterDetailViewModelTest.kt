@@ -59,7 +59,7 @@ class CharacterDetailViewModelTest {
         val character = Character(
             1,
             "Rick Sanchez",
-            "Any Url",
+            "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
             "Male",
             "",
             "Alive",
@@ -108,7 +108,7 @@ class CharacterDetailViewModelTest {
             Character(
                 1,
                 "Rick Sanchez",
-                "Any Url",
+                "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
                 "Male",
                 "",
                 "Alive",
@@ -117,7 +117,7 @@ class CharacterDetailViewModelTest {
             Character(
                 2,
                 "Morty Smith",
-                "Any Url",
+                "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
                 "Male",
                 "",
                 "Alive",
@@ -126,7 +126,7 @@ class CharacterDetailViewModelTest {
             Character(
                 3,
                 "Summer Smith",
-                "Any Url",
+                "https://rickandmortyapi.com/api/character/avatar/3.jpeg",
                 "Female",
                 "",
                 "Alive",
@@ -156,7 +156,7 @@ class CharacterDetailViewModelTest {
         val character = Character(
                 1,
                 "Rick Sanchez",
-                "Any Url",
+                "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
                 "Male",
                 "",
                 "Alive",
@@ -180,7 +180,7 @@ class CharacterDetailViewModelTest {
         val character = Character(
             1,
             "Rick Sanchez",
-            "Any Url",
+            "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
             "Male",
             "",
             "Alive",

@@ -9,7 +9,7 @@ class CharacterDataMapper @Inject constructor() : Mapper<CharacterDTO, Character
 
     override fun mapToDomain(input: CharacterDTO): Character {
         return Character(
-            input.id?: -1,
+            input.id ?: 0,
             input.name ?: "",
             input.image?: "",
             input.gender?: "",

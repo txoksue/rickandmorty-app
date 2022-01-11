@@ -64,8 +64,8 @@ class LocationRepositoryImplTest {
     @Test
     fun locationRepositoryImpl_getLocation_Success() = runBlocking {
 
-        val locationDTO = LocationDTO(1, "", "", "", arrayListOf(), "", "")
-        val location = Location(1, "","","")
+        val locationDTO = LocationDTO(3, "Citadel of Ricks", "Space station", "unknown", arrayListOf(), "any url", "any date")
+        val location = Location(3, "Citadel of Ricks", "Space station", "unknown")
 
         whenever(rickyAndMortyApiService.getLocation("3")).thenReturn(Response.success(locationDTO))
 

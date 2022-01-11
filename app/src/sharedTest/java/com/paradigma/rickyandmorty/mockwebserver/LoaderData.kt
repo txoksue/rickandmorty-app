@@ -1,13 +1,12 @@
 package com.paradigma.rickyandmorty.mockwebserver
 
-import android.content.Context
 import java.io.InputStream
 import java.io.InputStreamReader
 
 
 object LoaderData {
 
-    fun load(context: Context, json: String): String {
+    fun load(json: String): String {
         val inputStream = javaClass.classLoader.getResourceAsStream(json)
         return inputStreamToString(inputStream, "UTF-8")
     }

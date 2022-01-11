@@ -39,9 +39,11 @@ class CharacterRepositoryImpl @Inject constructor(var rickyAndMortyApiService: R
                     return@withContext ResultCharacters.Success(characterList, totalPages)
 
                 } ?: return@withContext ResultCharacters.NoData
-            }
 
-            return@withContext ResultCharacters.Error(IOException("Error getting characters - ${response.code()} ${response.message()}"))
+            } else {
+
+                return@withContext ResultCharacters.Error(IOException("Error getting characters"))
+            }
 
         } catch (e: Exception) {
             Log.e(TAG, e.printStackTrace().toString())
