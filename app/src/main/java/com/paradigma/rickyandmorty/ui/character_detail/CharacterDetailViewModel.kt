@@ -35,7 +35,7 @@ class CharacterDetailViewModel @Inject constructor(private val locationRepositor
 
     fun getCharacterLocation() {
 
-        GlobalScope.launchIdling {
+        viewModelScope.launchIdling {
 
             character?.let { character ->
 
@@ -47,45 +47,45 @@ class CharacterDetailViewModel @Inject constructor(private val locationRepositor
 
                         checkIsFavorite(character.id)
 
-                        _statusScreen.postValue(ScreenState.Results(result.data))
+                        _statusScreen.value = ScreenState.Results(result.data)
                     }
                     is NoData -> {
-                        _statusScreen.postValue(ScreenState.NoData)
+                        _statusScreen.value = ScreenState.NoData
                     }
                     is Error -> {
-                        _statusScreen.postValue(ScreenState.Error)
+                        _statusScreen.value = ScreenState.Error
                     }
                 }
 
-            } ?: kotlin.run { _statusScreen.postValue(ScreenState.NoData) }
+            } ?: kotlin.run { _statusScreen.value = ScreenState.NoData }
         }
     }
 
     fun checkIsFavorite(characterId: Int) {
-        GlobalScope.launchIdling {
+        viewModelScope.launchIdling {
             val result = favoriteRepository.getAllFavoriteCharacters()
 
             if (result is ResultFavorites.Success) {
-                _showFavorite.postValue(result.data.any { it.id == characterId })
+                _showFavorite.value = result.data.any { it.id == characterId }
             }
         }
     }
 
 
     fun saveCharacterAsFavorite() {
-        GlobalScope.launchIdling {
+        viewModelScope.launchIdling {
             character?.let {
                 favoriteRepository.saveCharacter(it)
-                _showFavorite.postValue(true)
+                _showFavorite.value = true
             }
         }
     }
 
     fun removeCharacterAsFavorite() {
-        GlobalScope.launchIdling {
+        viewModelScope.launchIdling {
             character?.let {
                 favoriteRepository.deleteCharacter(it)
-                _showFavorite.postValue(false)
+                _showFavorite.value = false
             }
         }
     }

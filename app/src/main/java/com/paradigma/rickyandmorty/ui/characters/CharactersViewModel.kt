@@ -3,6 +3,7 @@ package com.paradigma.rickyandmorty.ui.characters
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.paradigma.rickyandmorty.common.extensions.launchIdling
 import com.paradigma.rickyandmorty.data.repository.ResultCharacters
 import com.paradigma.rickyandmorty.data.repository.ResultCharacters.*
@@ -36,7 +37,7 @@ class CharactersViewModel @Inject constructor(var characterRepository: Character
 
     fun getCharacters() {
 
-        GlobalScope.launchIdling {
+        viewModelScope.launchIdling {
 
             val result: ResultCharacters = characterRepository.getCharacters(page)
 
@@ -62,13 +63,13 @@ class CharactersViewModel @Inject constructor(var characterRepository: Character
                     page++
                     requestingMoreData = false
 
-                    _statusScreen.postValue(ScreenState.Results(characterList))
+                    _statusScreen.value  = ScreenState.Results(characterList)
                 }
                 is NoData -> {
-                    _statusScreen.postValue(ScreenState.NoData)
+                    _statusScreen.value = ScreenState.NoData
                 }
                 is Error -> {
-                    _statusScreen.postValue(ScreenState.Error)
+                    _statusScreen.value = ScreenState.Error
                 }
             }
         }

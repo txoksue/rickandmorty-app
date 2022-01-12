@@ -100,8 +100,6 @@ class FavoritesFragmentTest {
 
         launchFragmentInHiltContainer<FavoritesFragment>()
 
-        //Thread.sleep(2000)
-
         onView(withId(R.id.recycler_view_favorite_list)).check(matches(isDisplayed()))
     }
 
@@ -110,8 +108,6 @@ class FavoritesFragmentTest {
     fun favoritesFragment_noData() {
 
         launchFragmentInHiltContainer<FavoritesFragment>()
-
-        //Thread.sleep(2000)
 
         onView(withId(R.id.component_favorite_no_result)).check(matches(isDisplayed()))
 
@@ -132,8 +128,6 @@ class FavoritesFragmentTest {
             Navigation.setViewNavController(requireView(), navController)
         }
 
-        //Thread.sleep(2000)
-
         onView(withId(R.id.recycler_view_favorite_list))
             .perform(
                 actionOnItem<RecyclerView.ViewHolder>(
@@ -143,7 +137,7 @@ class FavoritesFragmentTest {
 
         verify(navController).navigate(
             FavoritesFragmentDirections.actionFavoritesFragmentToCharacterDetailFragment(
-                charactersList[0]
+                charactersList[1]
             )
         )
     }

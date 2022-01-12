@@ -101,8 +101,6 @@ class CharactersFragmentTest {
 
         launchFragmentInHiltContainer<CharactersFragment>()
 
-        //Thread.sleep(2000)
-
         onView(withId(R.id.component_characters_no_result)).check(matches((isDisplayed())))
 
         onView(withText(R.string.characters_no_results)).check(matches((isDisplayed())))
@@ -116,8 +114,6 @@ class CharactersFragmentTest {
         mockWebServer.dispatcher = ErrorDispatcher()
 
         launchFragmentInHiltContainer<CharactersFragment>()
-
-        //Thread.sleep(2000)
 
         onView(withId(R.id.component_characters_no_result)).check(matches(isDisplayed()))
 
@@ -139,7 +135,6 @@ class CharactersFragmentTest {
             Navigation.setViewNavController(requireView(), navController)
         }
 
-        //Thread.sleep(2000)
 
         onView(allOf(withId(R.id.recycler_view_character_list), isDisplayed()))
             .perform(

@@ -173,4 +173,6 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottie_version"
 
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
+
+    androidTestImplementation 'org.opentest4j:opentest4j:1.1.1'
 }

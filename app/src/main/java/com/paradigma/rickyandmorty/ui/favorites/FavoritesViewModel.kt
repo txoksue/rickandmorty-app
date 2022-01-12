@@ -25,19 +25,19 @@ class FavoritesViewModel @Inject constructor(var favoritesRepository: FavoritesR
     val favorites: LiveData<ArrayList<Character>>
         get() = _favorites
 
-    fun getFavorites() = GlobalScope.launchIdling {
+    fun getFavorites() = viewModelScope.launchIdling {
 
         val result = favoritesRepository.getAllFavoriteCharacters()
 
         when (result) {
             is Success -> {
-                _statusScreen.postValue(ScreenState.Results(result.data))
+                _statusScreen.value = ScreenState.Results(result.data)
             }
             is NoData -> {
-                _statusScreen.postValue(ScreenState.NoData)
+                _statusScreen.value = ScreenState.NoData
             }
             is Error -> {
-                _statusScreen.postValue(ScreenState.Error)
+                _statusScreen.value = ScreenState.Error
             }
         }
     }
