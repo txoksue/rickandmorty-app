@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible"
         tools:visibility="gone">
 
         <com.airbnb.lottie.LottieAnimationView
@@ -39,21 +40,27 @@
         android:layout_height="0dp"
         android:layout_marginTop="?attr/actionBarSize"
         android:background="@color/backgroundListColor"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_character_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_character_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +70,7 @@
             </androidx.recyclerview.widget.RecyclerView>
 
 
-            <com.paradigma.rickyandmorty.common.component.ComponentNoResults
+            <com.paradigma.rickandmorty.common.component.ComponentNoResults
                 android:id="@+id/component_characters_no_result"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

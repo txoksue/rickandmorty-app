@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.paradigma.rickyandmorty.ui.splash.SplashFragment"
+        android:name="com.paradigma.rickandmorty.ui.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/charactersFragment"
-        android:name="com.paradigma.rickyandmorty.ui.characters.CharactersFragment"
+        android:name="com.paradigma.rickandmorty.ui.characters.CharactersFragment"
         android:label="fragment_characters"
         tools:layout="@layout/fragment_characters" >
         <action
@@ -28,16 +28,16 @@
     </fragment>
     <fragment
         android:id="@+id/characterDetailFragment"
-        android:name="com.paradigma.rickyandmorty.ui.character_detail.CharacterDetailFragment"
+        android:name="com.paradigma.rickandmorty.ui.character_detail.CharacterDetailFragment"
         android:label="fragment_character_detail"
         tools:layout="@layout/fragment_character_detail" >
         <argument
             android:name="character"
-            app:argType="com.paradigma.rickyandmorty.domain.Character" />
+            app:argType="com.paradigma.rickandmorty.domain.Character" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.paradigma.rickyandmorty.ui.favorites.FavoritesFragment"
+        android:name="com.paradigma.rickandmorty.ui.favorites.FavoritesFragment"
         android:label="favorites_fragment"
         tools:layout="@layout/favorites_fragment" >
         <action
