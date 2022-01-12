@@ -11,13 +11,13 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
     defaultConfig {
-        applicationId "com.paradigma.rickyandmorty"
+        applicationId "com.paradigma.rickandmorty"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner "com.paradigma.rickyandmorty.CustomTestRunner"
+        testInstrumentationRunner "com.paradigma.rickandmorty.CustomTestRunner"
     }
 
     testOptions {
