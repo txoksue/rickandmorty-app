@@ -1,6 +1,6 @@
 ## RICK AND MORTY APP
 
-![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/rick_and_morty_background.png)
+![](https://github.com/txoksue/rickandmorty-app/blob/master/screenshots/rick_and_morty_background.png)
 
 La aplicación se compone de 4 pantallas:
 
@@ -12,10 +12,10 @@ La aplicación se compone de 4 pantallas:
 
 - Detalle de personaje
 
-![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/splash.png)
-![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/characters_list.png)
-![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/favorites_list.png)
-![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/character_detail.png)
+![](https://github.com/txoksue/rickandmorty-app/blob/master/screenshots/splash.png)
+![](https://github.com/txoksue/rickandmorty-app/blob/master/screenshots/characters_list.png)
+![](https://github.com/txoksue/rickandmorty-app/blob/master/screenshots/favorites_list.png)
+![](https://github.com/txoksue/rickandmorty-app/blob/master/screenshots/character_detail.png)
 
 ## Arquitectura
 
@@ -23,8 +23,8 @@ La aplicación se compone de 4 pantallas:
 
 * **Patrón Repository con Clean Architecture** para acceder a la API.
 
-![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/repository_architecture.png)
-![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/clean-architecture-own-layers.png)
+![](https://github.com/txoksue/rickandmorty-app/blob/master/screenshots/repository_architecture.png)
+![](https://github.com/txoksue/rickandmorty-app/blob/master/screenshots/clean-architecture-own-layers.png)
 
 * **ROOM** para gestión de favoritos en una base de datos local.
 
