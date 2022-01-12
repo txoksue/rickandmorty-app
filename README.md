@@ -1,4 +1,4 @@
-## RICKY AND MORTY APP
+## RICK AND MORTY APP
 
 ![](https://github.com/txoksue/rickyandmorty-app/blob/master/screenshots/rick_and_morty_background.png)
 
