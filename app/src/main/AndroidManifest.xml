@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.paradigma.rickyandmorty">
+    package="com.paradigma.rickandmorty">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".common.BaseApplication"
+        android:name="com.paradigma.rickandmorty.common.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ricky"
+        android:icon="@mipmap/rick"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ricky"
+        android:roundIcon="@mipmap/rick"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RickyAndMortyApp.NoActionBar">
-        <activity android:name=".ui.MainActivity">
+        android:theme="@style/Theme.RickAndMortyApp.NoActionBar">
+        <activity android:name="com.paradigma.rickandmorty.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
